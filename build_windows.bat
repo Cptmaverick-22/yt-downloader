@@ -84,6 +84,9 @@ if errorlevel 1 goto failed
 copy /Y "licenses\CHARSET-NORMALIZER-LICENSE.txt" "dist\YT Downloader\licenses\CHARSET-NORMALIZER-LICENSE.txt" >nul
 if errorlevel 1 goto failed
 
+copy /Y "licenses\PYCRYPTODOMEX-LICENSE.txt" "dist\YT Downloader\licenses\PYCRYPTODOMEX-LICENSE.txt" >nul
+if errorlevel 1 goto failed
+
 echo.
 echo ==========================================
 echo BUILD COMPLETED SUCCESSFULLY!

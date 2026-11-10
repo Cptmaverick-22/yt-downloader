@@ -71,6 +71,14 @@ The respective licence terms and copyright notices are reproduced in the applica
 - Project: https://github.com/python/importlib_metadata
 - Licence text: See the bundled Apache 2.0 `LICENSE` file under the setuptools vendor directory.
 
+### PyCryptodomex 3.24.2
+- **Licence:** Public Domain and BSD 2-Clause
+- **Purpose:** Cryptographic functionality included in the packaged application.
+- **Licence text:** `licenses/PYCRYPTODOMEX-LICENSE.txt`
+- **Original project:** https://github.com/Legrandin/pycryptodome
+
+The original licence file is included with this distribution and contains both the public-domain dedication and BSD 2-Clause terms.
+
 ---
 
 This document covers the Python and JavaScript components identified in the current Windows application bundle. Other bundled software, including FFmpeg and its external libraries, has separate licensing and redistribution requirements.
