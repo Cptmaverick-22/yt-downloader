@@ -33,13 +33,13 @@ Download videos as MP4 or extract audio as MP3 with selectable quality and bitra
 
 ## Features
 
-- Download YouTube videos in available resolutions, up to 2160p (4K) when supported by the source video.
+- Download videos in available resolutions, up to 2160p (4K) when supported by the source.
 - Download audio as MP3 at 128, 192, 256, or 320 kbps.
 - Display download progress, speed, and estimated remaining time.
 - Merge separate video and audio streams using FFmpeg.
 - Convert downloaded audio to MP3.
-- Select a custom download directory.
-- Remember your selected download directory.
+- Choose a custom download directory.
+- Remember your preferred download directory.
 - Detect duplicate downloads using the video ID, resolution, and bitrate.
 - Cancel downloads using Ctrl+C.
 - Clean up incomplete files after cancellation.
@@ -57,11 +57,11 @@ YT Downloader uses four main technologies:
 | FFmpeg | Merges video/audio streams and converts audio |
 | Deno | Provides a JavaScript runtime used by yt-dlp |
 
-**Important:** These are separate software components. Installing Python packages does not automatically install Python, FFmpeg, or Deno.
+**Note:** Python, FFmpeg, and Deno are installed separately. The Python dependencies are installed through `requirements.txt`.
 
 ## Requirements
 
-Before installing YT Downloader, make sure your computer has the following:
+Make sure your computer has the following:
 
 | Requirement | Minimum version |
 |---|---|
@@ -71,11 +71,11 @@ Before installing YT Downloader, make sure your computer has the following:
 | Deno | 2.3.0 or newer |
 | Internet connection | Required |
 
-You do not need to install yt-dlp manually. It is installed automatically through `requirements.txt`.
+You do not need to install yt-dlp manually. It is installed through `requirements.txt`.
 
 ### What is requirements.txt?
 
-The `requirements.txt` file contains the Python packages required by this application.
+This file contains the Python packages required by the application.
 
 Its current content is:
 
@@ -83,52 +83,31 @@ Its current content is:
 yt-dlp[default]
 ```
 
-This installs yt-dlp and its default optional dependencies.
-
-It does not install Python, FFmpeg, or Deno. Those must be installed separately.
+This installs yt-dlp and its default optional dependencies. It does not install Python, FFmpeg, or Deno.
 
 ---
 
 # Installation on Windows
 
-Follow these instructions if you are using Windows 10 or Windows 11.
+Follow these instructions on Windows 10 or Windows 11.
 
 ## Step 1: Install Python
 
-Python is the programming language used to run this application.
-
-1. Visit the official Python website:
-
-   https://www.python.org/downloads/windows/
-
+1. Visit the [official Python website](https://www.python.org/downloads/windows/).
 2. Download Python 3.11 or newer.
-3. Run the downloaded installer.
-4. Enable the **Add python.exe to PATH** option if it is displayed.
+3. Run the installer.
+4. Enable **Add python.exe to PATH** if the option is displayed.
 5. Click **Install Now**.
-6. Wait for the installation to finish.
-7. Close and reopen Command Prompt (CMD).
+6. Close and reopen Command Prompt (CMD).
 
-### Verify Python installation
-
-Open CMD and execute:
+### Verify Python
 
 ```cmd
 python --version
-```
-
-You should see a version similar to:
-
-```text
-Python 3.14.x
-```
-
-Also verify the Python launcher:
-
-```cmd
 py --version
 ```
 
-Both commands should display a Python version.
+Both commands should display an installed Python version.
 
 If Windows opens the Microsoft Store instead of Python, check your Python installation and Windows App Execution Aliases settings.
 
@@ -136,84 +115,113 @@ If Windows opens the Microsoft Store instead of Python, check your Python instal
 
 Deno is a JavaScript runtime used by yt-dlp for certain YouTube extraction operations.
 
-1. Open Command Prompt.
-2. Execute:
+Open CMD and execute:
 
 ```cmd
 winget install DenoLand.Deno
 ```
 
-3. Wait for installation to finish.
-4. Close and reopen CMD.
+After installation, close and reopen CMD.
 
-### Verify Deno installation
+### Verify Deno
 
 ```cmd
 deno --version
 ```
 
-The command should display the installed Deno version.
+The command should display the installed version.
 
-If Windows cannot find `deno`, check that the installation completed and that Deno's installation directory is available through PATH.
+If Windows cannot find `deno`, check that its installation directory is available through PATH.
 
 ## Step 3: Install FFmpeg and FFprobe
 
-FFmpeg is required for merging video and audio streams and converting audio into MP3.
+FFmpeg is required for merging video and audio streams and converting audio into MP3. FFprobe is included in standard FFmpeg builds.
 
-FFprobe is included in standard FFmpeg builds.
+### Method 1: Install using WinGet (Recommended)
 
-1. Visit the following Windows build provider:
+WinGet is the Windows Package Manager available on supported Windows 10 and Windows 11 installations.
 
-   https://www.gyan.dev/ffmpeg/builds/
+1. Open CMD.
+2. Check whether WinGet is available:
 
+```cmd
+winget --version
+```
+
+3. Install FFmpeg:
+
+```cmd
+winget install -e --id Gyan.FFmpeg
+```
+
+4. Wait for installation to finish.
+5. Close and reopen CMD.
+
+WinGet installs the FFmpeg build and handles its installation configuration.
+
+### Verify FFmpeg and FFprobe
+
+Execute:
+
+```cmd
+where ffmpeg
+where ffprobe
+```
+
+Then check their versions:
+
+```cmd
+ffmpeg -version
+ffprobe -version
+```
+
+Both executables should be found and display version information.
+
+### Method 2: Manual Installation (Alternative)
+
+If WinGet is unavailable or you prefer manual installation:
+
+1. Visit [Gyan.dev FFmpeg Builds](https://www.gyan.dev/ffmpeg/builds/).
 2. Download the **Release Essentials** build.
-3. Extract the downloaded archive using a suitable archive utility.
+3. Extract the archive using a suitable archive utility.
 4. Locate the extracted `bin` directory.
+5. Confirm that it contains:
 
-   It should contain:
+```text
+ffmpeg.exe
+ffprobe.exe
+```
 
-   - `ffmpeg.exe`
-   - `ffprobe.exe`
-
-5. Copy the full path of that `bin` directory.
-
-6. Add the directory to your Windows PATH:
+6. Copy the full path of the `bin` directory.
+7. Add that directory to Windows PATH:
 
    - Open Windows Search.
    - Search for **Environment Variables**.
    - Select **Edit the system environment variables**.
    - Click **Environment Variables**.
    - Under your user variables, select `Path`.
-   - Click **Edit**.
-   - Click **New**.
+   - Click **Edit**, then **New**.
    - Paste the FFmpeg `bin` directory path.
    - Save all changes.
 
-7. Close and reopen CMD.
+8. Close and reopen CMD.
 
-### Verify FFmpeg installation
-
-Execute:
+Verify the installation:
 
 ```cmd
 ffmpeg -version
-```
-
-Then:
-
-```cmd
 ffprobe -version
 ```
 
-Both commands should display version information.
+**Important:** Use either WinGet or the manual method. You do not need to install FFmpeg again if it is already installed and both commands work.
 
-**Important:** Download FFmpeg only from a source you trust. Gyan.dev provides Windows builds of FFmpeg; it is a third-party build provider, not the official FFmpeg project itself.
+Gyan.dev is a third-party provider of Windows FFmpeg builds, not the official FFmpeg project itself.
 
 ---
 
 # Installation on Fedora Linux
 
-Follow these instructions if you are using Fedora Linux.
+Follow these instructions on Fedora Linux.
 
 ## Step 1: Install Python and pip
 
@@ -223,7 +231,7 @@ Open Terminal and execute:
 sudo dnf install python3 python3-pip
 ```
 
-### Verify Python installation
+### Verify Python
 
 ```bash
 python3 --version
@@ -249,9 +257,6 @@ sudo dnf install ffmpeg
 
 ```bash
 ffmpeg -version
-```
-
-```bash
 ffprobe -version
 ```
 
@@ -313,27 +318,21 @@ You can obtain YT Downloader in two ways.
 
 ## Method 1: Download ZIP (Recommended for beginners)
 
-1. Visit the GitHub repository:
-
-   https://github.com/Cptmaverick-22/yt-downloader
-
+1. Visit the [GitHub repository](https://github.com/Cptmaverick-22/yt-downloader).
 2. Click the green **Code** button.
 3. Select **Download ZIP**.
-4. Wait for the download to finish.
-5. Extract the ZIP archive.
-6. Open the extracted `yt-downloader` folder.
-
-You now have the application source code on your computer.
+4. Extract the downloaded archive.
+5. Open the extracted `yt-downloader` folder.
 
 ## Method 2: Clone using Git
 
-If Git is installed on your computer, open a terminal and execute:
+If Git is installed, open a terminal and execute:
 
 ```bash
 git clone https://github.com/Cptmaverick-22/yt-downloader.git
 ```
 
-Open the project directory:
+Then open the project directory:
 
 ```bash
 cd yt-downloader
@@ -355,7 +354,7 @@ Open CMD inside the `yt-downloader` directory.
 py -3 -m venv .venv
 ```
 
-A virtual environment keeps this application's Python dependencies separate from other Python projects.
+A virtual environment keeps this application's Python dependencies separate from other projects.
 
 ### Step 2: Activate the virtual environment
 
@@ -363,7 +362,7 @@ A virtual environment keeps this application's Python dependencies separate from
 .venv\Scripts\activate
 ```
 
-After activation, your CMD prompt should begin with:
+Your CMD prompt should now begin with:
 
 ```text
 (.venv)
@@ -375,7 +374,7 @@ After activation, your CMD prompt should begin with:
 python -m pip install --upgrade pip
 ```
 
-### Step 4: Install project dependencies
+### Step 4: Install dependencies
 
 ```cmd
 python -m pip install -r requirements.txt
@@ -411,7 +410,7 @@ Your terminal prompt should now display:
 python -m pip install --upgrade pip
 ```
 
-### Step 4: Install project dependencies
+### Step 4: Install dependencies
 
 ```bash
 python -m pip install -r requirements.txt
@@ -447,7 +446,7 @@ Choose an option by entering its corresponding number.
 1. Select `1` from the main menu.
 2. Paste a supported YouTube video URL.
 3. Select an available video resolution.
-4. Wait for the download and merging process to finish.
+4. Wait for downloading and merging to finish.
 
 Example:
 
@@ -479,7 +478,7 @@ The application downloads and converts the audio into MP3 format.
 1. Select `3` from the main menu.
 2. Enter your preferred download directory.
 3. The application creates the directory if necessary.
-4. Your selected location is saved and remembered for future runs.
+4. Your selected location is saved for future runs.
 
 ## Exit the Application
 
@@ -523,7 +522,7 @@ Video Name [1080p] [VIDEO_ID].mp4
 Audio Name [320kbps] [VIDEO_ID].mp3
 ```
 
-This makes it easier to identify the downloaded quality and distinguish different versions of the same video.
+This makes it easier to identify downloaded quality and distinguish different versions of the same video.
 
 ---
 
@@ -571,23 +570,22 @@ Possible Windows message:
 'python' is not recognized as an internal or external command
 ```
 
-Solution:
+**Solution:**
 
-- Install Python from https://www.python.org/downloads/
+- Install Python from https://www.python.org/downloads/.
 - Enable **Add python.exe to PATH** during installation.
 - Restart CMD.
 - Try `py --version` if `python` is unavailable.
 
 ## 2. FFmpeg was not found
 
-Possible cause:
+**Possible cause:** FFmpeg is not installed or its executable directory is missing from PATH.
 
-FFmpeg is not installed or its `bin` directory is missing from PATH.
+**Solution:**
 
-Solution:
-
-- Install FFmpeg.
-- Add the directory containing `ffmpeg.exe` and `ffprobe.exe` to PATH.
+- Install FFmpeg using WinGet or the manual method on Windows.
+- Install FFmpeg through RPM Fusion on Fedora.
+- Make sure the directory containing `ffmpeg` and `ffprobe` is available through PATH.
 - Restart the terminal.
 
 Verify:
@@ -597,13 +595,18 @@ ffmpeg -version
 ffprobe -version
 ```
 
+On Windows, you can also check the executable locations:
+
+```cmd
+where ffmpeg
+where ffprobe
+```
+
 ## 3. Deno was not found
 
-Possible cause:
+**Possible cause:** Deno is not installed or is unavailable through PATH.
 
-Deno is not installed or is unavailable through PATH.
-
-Solution:
+**Solution:**
 
 - Install Deno.
 - Verify its PATH configuration.
@@ -617,11 +620,9 @@ deno --version
 
 ## 4. No module named yt_dlp
 
-Possible cause:
+**Possible cause:** Project dependencies have not been installed or the virtual environment is not activated.
 
-The project dependencies have not been installed or the virtual environment is not activated.
-
-Solution:
+**Solution:**
 
 Activate the virtual environment and execute:
 
