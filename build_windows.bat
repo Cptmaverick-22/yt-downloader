@@ -67,6 +67,9 @@ if errorlevel 1 goto failed
 copy /Y "LICENSE" "dist\YT Downloader\LICENSE" >nul
 if errorlevel 1 goto failed
 
+copy /Y "THIRD_PARTY_NOTICES.md" "dist\YT Downloader\THIRD_PARTY_NOTICES.md" >nul
+if errorlevel 1 goto failed
+
 echo.
 echo ==========================================
 echo BUILD COMPLETED SUCCESSFULLY!
