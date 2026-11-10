@@ -268,4 +268,4 @@ Respect copyright laws and YouTube's Terms of Service.
 
 ## License
 
-No license has been specified yet. All rights are reserved by default unless a license is added to this project.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
