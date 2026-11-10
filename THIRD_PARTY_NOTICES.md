@@ -47,14 +47,14 @@ The respective licence terms and copyright notices are reproduced in the applica
 - Licence: MIT
 - Project: https://github.com/google/brotli
 - Copyright: Brotli Authors.
-- Licence text: Refer to the Brotli project licence.
+- Licence text: See `licenses/BROTLI-LICENSE.txt`.
 
 ## 5. Certifi
 
 - Version: 2026.10.23
 - Licence: Mozilla Public License 2.0 (MPL-2.0)
 - Project: https://github.com/certifi/python-certifi
-- Licence text: Refer to the Certifi project licence and bundled certificate-bundle notices.
+- Licence text: See `licenses/CERTIFI-LICENSE.txt`.
 
 ## 6. Charset-normalizer
 
@@ -62,7 +62,7 @@ The respective licence terms and copyright notices are reproduced in the applica
 - Licence: MIT
 - Project: https://github.com/Ousret/charset_normalizer
 - Copyright: 2025 TAHRI Ahmed R.
-- Licence text: Refer to the Charset-normalizer project licence.
+- Licence text: See `licenses/CHARSET-NORMALIZER-LICENSE.txt`.
 
 ## 7. importlib_metadata (vendored by setuptools)
 

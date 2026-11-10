@@ -71,6 +71,20 @@ copy /Y "THIRD_PARTY_NOTICES.md" "dist\YT Downloader\THIRD_PARTY_NOTICES.md" >nu
 if errorlevel 1 goto failed
 
 echo.
+echo Copying third-party licence files...
+
+mkdir "dist\YT Downloader\licenses" 2>nul
+
+copy /Y "licenses\BROTLI-LICENSE.txt" "dist\YT Downloader\licenses\BROTLI-LICENSE.txt" >nul
+if errorlevel 1 goto failed
+
+copy /Y "licenses\CERTIFI-LICENSE.txt" "dist\YT Downloader\licenses\CERTIFI-LICENSE.txt" >nul
+if errorlevel 1 goto failed
+
+copy /Y "licenses\CHARSET-NORMALIZER-LICENSE.txt" "dist\YT Downloader\licenses\CHARSET-NORMALIZER-LICENSE.txt" >nul
+if errorlevel 1 goto failed
+
+echo.
 echo ==========================================
 echo BUILD COMPLETED SUCCESSFULLY!
 echo ==========================================
