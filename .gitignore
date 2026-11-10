@@ -1,0 +1,43 @@
+# Python virtual environment
+.venv/
+venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Application settings (machine-specific)
+settings.json
+settings.json.backup
+settings.tmp
+
+# Downloaded media
+downloads/
+
+# Incomplete download files
+*.part
+*.ytdl
+
+# Temporary files
+*.tmp
+*.bak
+
+# Test and coverage files
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build files
+build/
+dist/
+*.egg-info/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+Thumbs.db
