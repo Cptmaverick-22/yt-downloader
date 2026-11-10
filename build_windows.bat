@@ -87,6 +87,12 @@ if errorlevel 1 goto failed
 copy /Y "licenses\PYCRYPTODOMEX-LICENSE.txt" "dist\YT Downloader\licenses\PYCRYPTODOMEX-LICENSE.txt" >nul
 if errorlevel 1 goto failed
 
+copy /Y "licenses\PYTHON-LICENSE.txt" "dist\YT Downloader\licenses\PYTHON-LICENSE.txt" >nul
+if errorlevel 1 goto failed
+
+copy /Y "licenses\OPENSSL-LICENSE.txt" "dist\YT Downloader\licenses\OPENSSL-LICENSE.txt" >nul
+if errorlevel 1 goto failed
+
 echo.
 echo ==========================================
 echo BUILD COMPLETED SUCCESSFULLY!

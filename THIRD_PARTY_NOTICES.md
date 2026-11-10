@@ -79,6 +79,15 @@ The respective licence terms and copyright notices are reproduced in the applica
 
 The original licence file is included with this distribution and contains both the public-domain dedication and BSD 2-Clause terms.
 
+
+### Python 3.14.4
+- Licence: Python Software Foundation License Version 2
+- Additional third-party notices and licence texts are included in `licenses/PYTHON-LICENSE.txt`.
+
+### OpenSSL 3.0.19
+- Licence: Apache License 2.0
+- Full licence text: `licenses/OPENSSL-LICENSE.txt`
+- Source: https://github.com/openssl/openssl/tree/openssl-3.0.19
 ---
 
 This document covers the Python and JavaScript components identified in the current Windows application bundle. Other bundled software, including FFmpeg and its external libraries, has separate licensing and redistribution requirements.
