@@ -6,7 +6,7 @@ Download videos as MP4 or extract audio as MP3 with selectable quality and bitra
 
 **Current version:** 1.0
 
-**Supported operating systems:** Windows and Fedora Linux
+**Supported operating systems:** Windows 10/11 and Fedora Linux
 
 ---
 
@@ -33,7 +33,7 @@ Download videos as MP4 or extract audio as MP3 with selectable quality and bitra
 
 ## Features
 
-- Download YouTube videos in available resolutions, up to 2160p (4K).
+- Download YouTube videos in available resolutions, up to 2160p (4K) when supported by the source video.
 - Download audio as MP3 at 128, 192, 256, or 320 kbps.
 - Display download progress, speed, and estimated remaining time.
 - Merge separate video and audio streams using FFmpeg.
@@ -44,7 +44,7 @@ Download videos as MP4 or extract audio as MP3 with selectable quality and bitra
 - Cancel downloads using Ctrl+C.
 - Clean up incomplete files after cancellation.
 - Validate supported YouTube URLs.
-- Cross-platform support for Windows and Linux.
+- Support Windows and Fedora Linux.
 
 ## How It Works
 
@@ -53,13 +53,11 @@ YT Downloader uses four main technologies:
 | Software | Purpose |
 |---|---|
 | Python | Runs the application |
-| yt-dlp | Handles YouTube video and audio extraction |
+| yt-dlp | Handles video and audio extraction |
 | FFmpeg | Merges video/audio streams and converts audio |
 | Deno | Provides a JavaScript runtime used by yt-dlp |
 
-**Important:** These are separate software components. Installing Python packages alone does not install FFmpeg or Deno.
-
----
+**Important:** These are separate software components. Installing Python packages does not automatically install Python, FFmpeg, or Deno.
 
 ## Requirements
 
@@ -73,17 +71,19 @@ Before installing YT Downloader, make sure your computer has the following:
 | Deno | 2.3.0 or newer |
 | Internet connection | Required |
 
-You do not need to install yt-dlp manually. It will be installed automatically through `requirements.txt`.
+You do not need to install yt-dlp manually. It is installed automatically through `requirements.txt`.
 
 ### What is requirements.txt?
 
-The `requirements.txt` file contains the Python packages needed by this application.
+The `requirements.txt` file contains the Python packages required by this application.
 
-It currently includes:
+Its current content is:
 
 ```text
 yt-dlp[default]
 ```
+
+This installs yt-dlp and its default optional dependencies.
 
 It does not install Python, FFmpeg, or Deno. Those must be installed separately.
 
@@ -101,18 +101,11 @@ Python is the programming language used to run this application.
 
    https://www.python.org/downloads/windows/
 
-2. Download a Python version that is 3.11 or newer.
-
+2. Download Python 3.11 or newer.
 3. Run the downloaded installer.
-
-4. On the installation screen, enable:
-
-   **Add python.exe to PATH**
-
-5. Click Install Now.
-
+4. Enable the **Add python.exe to PATH** option if it is displayed.
+5. Click **Install Now**.
 6. Wait for the installation to finish.
-
 7. Close and reopen Command Prompt (CMD).
 
 ### Verify Python installation
@@ -135,13 +128,13 @@ Also verify the Python launcher:
 py --version
 ```
 
-If both commands work, Python is installed.
+Both commands should display a Python version.
 
 If Windows opens the Microsoft Store instead of Python, check your Python installation and Windows App Execution Aliases settings.
 
 ## Step 2: Install Deno
 
-Deno is a JavaScript runtime required by yt-dlp for certain YouTube extraction operations.
+Deno is a JavaScript runtime used by yt-dlp for certain YouTube extraction operations.
 
 1. Open Command Prompt.
 2. Execute:
@@ -159,7 +152,9 @@ winget install DenoLand.Deno
 deno --version
 ```
 
-You should see the installed Deno version.
+The command should display the installed Deno version.
+
+If Windows cannot find `deno`, check that the installation completed and that Deno's installation directory is available through PATH.
 
 ## Step 3: Install FFmpeg and FFprobe
 
@@ -167,22 +162,22 @@ FFmpeg is required for merging video and audio streams and converting audio into
 
 FFprobe is included in standard FFmpeg builds.
 
-1. Visit:
+1. Visit the following Windows build provider:
 
    https://www.gyan.dev/ffmpeg/builds/
 
-2. Download a suitable Windows build.
-3. Extract the downloaded archive.
-4. Locate the extracted `bin` folder.
+2. Download the **Release Essentials** build.
+3. Extract the downloaded archive using a suitable archive utility.
+4. Locate the extracted `bin` directory.
 
    It should contain:
 
    - `ffmpeg.exe`
    - `ffprobe.exe`
 
-5. Copy the full path of that `bin` folder.
+5. Copy the full path of that `bin` directory.
 
-6. Add the folder to your Windows PATH:
+6. Add the directory to your Windows PATH:
 
    - Open Windows Search.
    - Search for **Environment Variables**.
@@ -191,12 +186,14 @@ FFprobe is included in standard FFmpeg builds.
    - Under your user variables, select `Path`.
    - Click **Edit**.
    - Click **New**.
-   - Paste the FFmpeg `bin` folder path.
+   - Paste the FFmpeg `bin` directory path.
    - Save all changes.
 
 7. Close and reopen CMD.
 
 ### Verify FFmpeg installation
+
+Execute:
 
 ```cmd
 ffmpeg -version
@@ -210,38 +207,63 @@ ffprobe -version
 
 Both commands should display version information.
 
+**Important:** Download FFmpeg only from a source you trust. Gyan.dev provides Windows builds of FFmpeg; it is a third-party build provider, not the official FFmpeg project itself.
+
 ---
 
 # Installation on Fedora Linux
 
 Follow these instructions if you are using Fedora Linux.
 
-## Step 1: Install Python and FFmpeg
+## Step 1: Install Python and pip
 
 Open Terminal and execute:
 
 ```bash
-sudo dnf install python3 python3-pip ffmpeg
+sudo dnf install python3 python3-pip
 ```
 
-If FFmpeg is unavailable in your enabled repositories, follow the RPM Fusion installation instructions:
-
-https://rpmfusion.org/Configuration
-
-### Verify Python
+### Verify Python installation
 
 ```bash
 python3 --version
 ```
 
-### Verify FFmpeg
+## Step 2: Enable RPM Fusion and install FFmpeg
+
+Fedora's default repositories may not provide the FFmpeg packages required by this application.
+
+Enable the RPM Fusion Free repository:
+
+```bash
+sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+```
+
+Then install FFmpeg:
+
+```bash
+sudo dnf install ffmpeg
+```
+
+### Verify FFmpeg installation
 
 ```bash
 ffmpeg -version
+```
+
+```bash
 ffprobe -version
 ```
 
-## Step 2: Install Deno
+Both commands should display version information.
+
+For more information about RPM Fusion:
+
+https://rpmfusion.org/Configuration
+
+## Step 3: Install Deno
+
+Deno is a JavaScript runtime used by yt-dlp for certain YouTube extraction operations.
 
 Open Terminal and execute:
 
@@ -249,7 +271,23 @@ Open Terminal and execute:
 curl -fsSL https://deno.land/install.sh | sh
 ```
 
-Add Deno to PATH:
+Follow any instructions displayed by the installer.
+
+Close and reopen Terminal, then verify:
+
+```bash
+deno --version
+```
+
+### If Deno is not found
+
+The Deno executable is commonly installed in:
+
+```text
+~/.deno/bin/
+```
+
+For Bash, add that directory to PATH:
 
 ```bash
 echo 'export PATH="$HOME/.deno/bin:$PATH"' >> ~/.bashrc
@@ -261,7 +299,7 @@ Reload your shell configuration:
 source ~/.bashrc
 ```
 
-### Verify Deno
+Verify again:
 
 ```bash
 deno --version
@@ -282,7 +320,7 @@ You can obtain YT Downloader in two ways.
 2. Click the green **Code** button.
 3. Select **Download ZIP**.
 4. Wait for the download to finish.
-5. Extract the ZIP file.
+5. Extract the ZIP archive.
 6. Open the extracted `yt-downloader` folder.
 
 You now have the application source code on your computer.
@@ -317,7 +355,7 @@ Open CMD inside the `yt-downloader` directory.
 py -3 -m venv .venv
 ```
 
-A virtual environment keeps the application's Python dependencies separate from other Python projects.
+A virtual environment keeps this application's Python dependencies separate from other Python projects.
 
 ### Step 2: Activate the virtual environment
 
@@ -379,11 +417,11 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-**Important:** Create a separate virtual environment on each operating system. Never copy the Windows `.venv` folder to Linux or vice versa.
+**Important:** Create a separate virtual environment on each operating system. Never copy a Windows `.venv` folder to Linux or vice versa.
 
 ---
 
-# Run YT Downloader
+# How to Use
 
 Once installation is complete and the virtual environment is activated, execute:
 
@@ -391,7 +429,7 @@ Once installation is complete and the virtual environment is activated, execute:
 python main.py
 ```
 
-The application will display its main menu:
+The application displays its main menu:
 
 ```text
 YT Downloader v1.0
@@ -407,7 +445,7 @@ Choose an option by entering its corresponding number.
 ## Download a Video
 
 1. Select `1` from the main menu.
-2. Paste the supported YouTube video URL.
+2. Paste a supported YouTube video URL.
 3. Select an available video resolution.
 4. Wait for the download and merging process to finish.
 
@@ -424,7 +462,7 @@ Available resolutions depend on the source video.
 ## Download Audio (MP3)
 
 1. Select `2` from the main menu.
-2. Paste the supported YouTube URL.
+2. Paste a supported YouTube URL.
 3. Choose the desired audio bitrate.
 
 Available bitrates:
@@ -491,6 +529,8 @@ This makes it easier to identify the downloaded quality and distinguish differen
 
 # Project Structure
 
+After installation and first use, the project directory may look like this:
+
 ```text
 yt-downloader/
 │
@@ -503,21 +543,21 @@ yt-downloader/
 ├── .gitignore
 │
 ├── .venv/              # Created during installation
-├── downloads/          # Created automatically
-├── settings.json       # Created automatically
-└── __pycache__/        # Created automatically
+├── downloads/          # Created for downloaded media
+├── settings.json       # Created for application settings
+└── __pycache__/        # Generated by Python
 ```
 
 ### Main Python files
 
 | File | Purpose |
 |---|---|
-| main.py | Application menu and user interaction |
-| downloader.py | Downloading, conversion, and progress handling |
-| config.py | Download directory and settings management |
-| requirements.txt | Python package dependencies |
-| README.md | Installation and usage documentation |
-| LICENSE | MIT License |
+| `main.py` | Application menu and user interaction |
+| `downloader.py` | Downloading, conversion, and progress handling |
+| `config.py` | Download directory and settings management |
+| `requirements.txt` | Python package dependencies |
+| `README.md` | Installation and usage documentation |
+| `LICENSE` | MIT License |
 
 ---
 
@@ -525,7 +565,7 @@ yt-downloader/
 
 ## 1. Python is not recognized
 
-Possible message:
+Possible Windows message:
 
 ```text
 'python' is not recognized as an internal or external command
@@ -534,7 +574,7 @@ Possible message:
 Solution:
 
 - Install Python from https://www.python.org/downloads/
-- Enable Add Python to PATH during installation.
+- Enable **Add python.exe to PATH** during installation.
 - Restart CMD.
 - Try `py --version` if `python` is unavailable.
 
