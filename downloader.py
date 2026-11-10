@@ -4,9 +4,71 @@ import time
 from pathlib import Path
 from urllib.parse import urlparse
 
+
 import yt_dlp
 
-from config import get_download_dir
+from config import get_download_dir, IS_FROZEN, BASE_DIR
+
+
+def get_runtime_paths():
+    """Locate bundled or system media runtime executables."""
+
+    if IS_FROZEN:
+        runtime_dir = BASE_DIR / "runtime"
+        ffmpeg_dir = runtime_dir / "ffmpeg"
+
+        deno_path = runtime_dir / "deno.exe"
+        ffmpeg_path = ffmpeg_dir / "ffmpeg.exe"
+        ffprobe_path = ffmpeg_dir / "ffprobe.exe"
+
+        missing = [
+            path.name
+            for path in (deno_path, ffmpeg_path, ffprobe_path)
+            if not path.is_file()
+        ]
+
+        if missing:
+            raise FileNotFoundError(
+                "Bundled runtime files are missing: "
+                + ", ".join(missing)
+            )
+
+        return {
+            "deno": deno_path,
+            "ffmpeg": ffmpeg_path,
+            "ffprobe": ffprobe_path,
+        }
+
+    return {
+        "deno": shutil.which("deno"),
+        "ffmpeg": shutil.which("ffmpeg"),
+        "ffprobe": shutil.which("ffprobe"),
+    }
+
+
+def get_yt_dlp_runtime_options():
+    """Return yt-dlp options for the available runtime executables."""
+
+    paths = get_runtime_paths()
+
+    if not paths["ffmpeg"] or not paths["ffprobe"]:
+        raise FileNotFoundError(
+            "FFmpeg and FFprobe are required but were not found."
+        )
+
+    options = {
+        "ffmpeg_location": str(paths["ffmpeg"]),
+    }
+
+    if paths["deno"]:
+        options["js_runtimes"] = {
+            "deno": {
+                "path": str(paths["deno"]),
+            }
+        }
+
+    return options
+
 
 
 AUDIO_BITRATES = [128, 192, 256, 320]
@@ -370,8 +432,11 @@ def download_video(url, selected_quality, output_dir=None, info=None):
         print("Invalid video resolution.")
         return False
 
-    if not shutil.which("ffmpeg"):
-        print("FFmpeg is required but was not found.")
+    try:
+        runtime_options = get_yt_dlp_runtime_options()
+
+    except FileNotFoundError as error:
+        print(f"\nRuntime dependency error: {error}")
         return False
 
     resolved_output_dir = None
@@ -410,6 +475,7 @@ def download_video(url, selected_quality, output_dir=None, info=None):
         print(f"Location: {resolved_output_dir}")
 
         options = {
+            **runtime_options,
             "format": (
                 f"bestvideo[height={selected_quality}][ext=mp4]"
                 f"+bestaudio[ext=m4a]/"
@@ -469,8 +535,11 @@ def download_audio(url, bitrate, output_dir=None, info=None):
         print("Unsupported audio bitrate.")
         return False
 
-    if not shutil.which("ffmpeg"):
-        print("FFmpeg is required but was not found.")
+    try:
+        runtime_options = get_yt_dlp_runtime_options()
+
+    except FileNotFoundError as error:
+        print(f"\nRuntime dependency error: {error}")
         return False
 
     resolved_output_dir = None
@@ -509,6 +578,7 @@ def download_audio(url, bitrate, output_dir=None, info=None):
         print(f"Location: {resolved_output_dir}")
 
         options = {
+            **runtime_options,
             "format": "bestaudio/best",
             "outtmpl": str(
                 resolved_output_dir

@@ -32,6 +32,12 @@ build/
 dist/
 *.egg-info/
 
+# Windows installer output
+installer_output/
+
+# PyInstaller specification files
+*.spec
+
 # IDE and editor files
 .vscode/
 .idea/
